@@ -1,0 +1,85 @@
+paths:
+  - /CMIP6/
+collections:
+  id: cmip6
+item_processes:
+facets:
+  extraction_methods:
+    - name: regex
+      inputs:
+        regex: '^(?P<mip_era>\w+)\/(?P<activity_id>\w+)\/(?P<institution_id>[\w-]+)\/(?P<source_id>[\w-]+)\/(?P<experiment_id>[\w-]+)\/(?P<member_id>\w+)\/(?P<table_id>\w+)\/(?P<variable_id>\w+)\/(?P<grid_label>\w+)\/v(?P<dataset_version>\w+)\/'
+    - name: regex
+    # Datetime extractor for YYYYMM-YYYYMM format.
+      inputs:
+        regex: '^[\w\W]+_(?P<start_datetime>\d{6})-(?P<end_datetime>\d{6}).'
+      post_processors:
+        - name: isodate_processor
+          inputs:
+            format: '%Y%m'
+            date_keys:
+              - start_datetime
+              - end_datetime
+    - name: regex
+    # Datetime extractor for YYYYMMDD-YYYYMMDD format.
+      inputs:
+        regex: '^[\w\W]+_(?P<start_datetime>\d{8})-(?P<end_datetime>\d{8}).'
+      post_processors:
+        - name: isodate_processor
+          inputs:
+            format: '%Y%m%d'
+            date_keys:
+              - start_datetime
+              - end_datetime
+  aggregation_facets:
+  # DRS facets that make up the item_id hash.
+    - mip_era
+    - activity_id
+    - institution_id
+    - source_id
+    - experiment_id
+    - member_id
+    - table_id
+    - variable_id
+    - grid_label
+    - dataset_version
+  search_facets:
+  # Additional facets found in ESGF files/datasets
+    - master_id
+    - instance_id
+    - activity_drs
+    - cf_standard_name
+    - citation_url
+    - data_node
+    - data_specs_version
+    - dataset_id
+    - dataset_id_template_
+    - experiment_title
+    - frequency
+    - further_info_url
+    - grid
+    - index_node
+    - instance_id
+    - latest
+    - metadata_format
+    - model_cohort
+    - nominal_resolution
+    - pid
+    - prodict
+    - project
+    - realm
+    - replica
+    - source_type
+    - sub_experiment_id
+    - timestamp
+    - tracking_id
+    - variable
+    - variable_long_name
+    - variable_units
+    - variable_label
+    - retracted
+    - file_id
+    - height_bottom
+    - access
+    - height_units
+    - height_top
+    - url
