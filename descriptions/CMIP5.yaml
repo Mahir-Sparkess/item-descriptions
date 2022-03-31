@@ -1,0 +1,46 @@
+paths:
+  - /cmip5/
+collections:
+  id: cmip5
+facets:
+  extraction_methods:
+    - name: regex
+      inputs:
+        regex: '^(?P<project>\w+)\/(?P<product>\w+)\/(?P<institute>[\w-]+)\/(?P<model>[\w-]+)\/(?P<experiment>[\w-]+)\/(?P<time_frequency>\w+)\/(?P<realm>\w+)\/(?P<cmip_table>\w+)\/(?P<ensemble>\w+)\/v(?P<dataset_version>\w+)\/(?P<variable>[a-zA-Z0-9]+)\_'
+    - name: regex
+    # Datetime extractor for YYYYMM-YYYYMM format.
+      inputs:
+        regex: '^[\w\W]+_(?P<start_datetime>\d{6})-(?P<end_datetime>\d{6}).'
+      post_processors:
+        - name: isodate_processor
+          inputs:
+            format: '%Y%m'
+            date_keys:
+              - start_datetime
+              - end_datetime
+    - name: regex
+    # Datetime extractor for YYYYMMDD-YYYYMMDD format.
+      inputs:
+        regex: '^[\w\W]+_(?P<start_datetime>\d{8})-(?P<end_datetime>\d{8}).'
+      post_processors:
+        - name: isodate_processor
+          inputs:
+            format: '%Y%m%d'
+            date_keys:
+              - start_datetime
+              - end_datetime
+  aggregation_facets:
+  # facets that make up the hash for item_id
+    - project
+    - product
+    - institute
+    - model
+    - experiment
+    - time_frequency
+    - realm
+    - cmip_table
+    - ensemble
+    - dataset_version
+    - variable
+  search_facets: {}
+  # additional facets 
