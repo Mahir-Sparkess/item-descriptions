@@ -2,7 +2,6 @@ paths:
   - /CMIP6/
 collections:
   id: cmip6
-item_processes:
 facets:
   extraction_methods:
     - name: regex
